@@ -25,6 +25,8 @@ class TurtleGuiPlugin:
         ui_file = os.path.join(rospkg.RosPack().get_path('turtle_gui'), 'src', 'turtle_gui_plugin.ui')
         loadUi(ui_file, self._widget)
         self._widget.setObjectName('TurtleGuiPluginUi')
+        self._widget.xdisplay.display(self.a)
+        self._widget.ydisplay.display(self.b)
         self._widget.up.setAutoRepeat(True)
         self._widget.up.setAutoRepeatInterval(40)
         self._widget.up.pressed.connect(self.up_move)
@@ -43,8 +45,8 @@ class TurtleGuiPlugin:
         self._widget.show()
 
     def pose_callback(self,pose):
-        self._widget.xdisplay.display(pose.x)
-        self._widget.ydisplay.display(pose.y)
+        self.a=pose.x
+        self.b=pose.y
     def up_move(self):
         try:
             self.moveturtle.Up()
